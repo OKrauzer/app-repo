@@ -29,11 +29,11 @@ jobs:
         run: echo "TAG_NAME=`echo ${GITHUB_REF#refs/tags/}`" >> $GITHUB_ENV
       - name: Open PR in Environment Repository for new App Version
         env:
-          ENV_REPO: ${{ github.event.repository.name }}/env-repo
+          ENV_REPO: ${{ github.repository_owner }}/env-repo
         uses: benc-uk/workflow-dispatch@v1.1
         with:
           workflow: New Application Version
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          inputs: '{"tag_name": "${{ env.TAG_NAME }}", "app_repo": "${{ github.event.repository.name }}", "image": "${{ github.event.repository.full_name }}:${{ env.TAG_NAME }}"}'
+          inputs: '{"tag_name": "${{ env.TAG_NAME }}", "app_repo": "${{ github.event.repository.name }}", "image": "okostanths/app-repo:${{ env.TAG_NAME }}"}'
           ref: refs/heads/main
           repo: ${{ env.ENV_REPO }}
